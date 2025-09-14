@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+*.sqlite3
+*.db
+*.log
+*.pkl
+*.joblib
+*.ipynb_checkpoints/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Others
+.DS_Store
+
+# Node
+node_modules/
+
+# General
+*.bak
+*.swp
+*.swo
+
+# System
+$RECYCLE.BIN/
+
+# Mac
+.DS_Store
+
+# Logs
+*.log
+
+# Test output
+/test-output/
+
+# Build
+/build/
+
+# Annotation processors
+/generated-sources/
+/generated-test-sources/
+
+# Backup files
+*.bak
+
+# Temporary files
+*.tmp
+
+# Python virtual environments
+venv/
+ENV/
