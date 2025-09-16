@@ -4,7 +4,12 @@ import com.example.predict.api.PostBinaryRequest;
 import com.example.predict.api.PreMulticlassRequest;
 import com.example.predict.db.PredictionResult;
 import com.example.predict.db.PredictionResultRepository;
+import com.example.predict.model.Devices;
+import com.example.predict.model.Manufacturers;
+import com.example.predict.repo.DevicesRepo;
+import com.example.predict.repo.ManufacturersRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +21,14 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.*;
 
+import static ch.qos.logback.core.joran.spi.ConsoleTarget.findByName;
+
 @Service
 public class PythonPredictService {
-
+  @Autowired
+  DevicesRepo devicesRepo;
+  @Autowired
+  ManufacturersRepo manufacturersRepo;
   private static final Logger logger = LoggerFactory.getLogger(PythonPredictService.class);
 
   @Value("${python.executable}") private String pythonExe;
@@ -61,8 +71,10 @@ public class PythonPredictService {
     if (modelPrePath != null && !modelPrePath.isBlank()) { cmd.add("--model_pre"); cmd.add(modelPrePath); }
     cmd.add("--mongo_uri"); cmd.add(mongoUri);
     cmd.add("--mongo_db");  cmd.add(mongoDb);
-    add(cmd, "--device_id", req.getDeviceId());
-    add(cmd, "--manufacturer_id", req.getManufacturerId());
+    Devices device= devicesRepo.findByName(req.getDeviceName());
+    add(cmd, "--device_id", device==null?"":String.valueOf(device.getId()));
+    Manufacturers manufacturers =manufacturersRepo.findByName(req.getManufacturerName());
+    add(cmd, "--manufacturer_id", manufacturers==null?"":String.valueOf(manufacturers.getId()));
     add(cmd, "--risk_class", req.getRiskClass());
     add(cmd, "--classification", req.getClassification());
     add(cmd, "--implanted", req.getImplanted()==null?null:req.getImplanted().toString());

@@ -60,8 +60,8 @@ public class StatusSummaryService {
         ).collect(Collectors.toList());
 
         // 6. Manufacturers
-        Set<String> mfrs = events.stream()
-                .map(e -> e.get("manufacturer_id"))
+        Set<String> mfrs =events.stream()
+                .map(e -> e.get("device_id"))
                 .filter(Objects::nonNull)
                 .map(mid -> {
                     Document m = mongo.getCollection(manufacturersCol).find(new Document("id", mid)).first();
