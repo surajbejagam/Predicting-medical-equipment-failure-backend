@@ -5,7 +5,7 @@ services:
     container_name: mongo
     restart: always
     ports:
-      - "27017:27017"
+      - "27018:27017"
     environment:
       MONGO_INITDB_DATABASE: TeamC9
     volumes:
@@ -19,19 +19,18 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017
+      SPRING_DATA_MONGODB_URI: mongodb+srv://Suraj:dwPW6l3H4C2V6ATe@cluster0.fbqnoyu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       SPRING_DATA_MONGODB_DATABASE: TeamC9
-      PYTHON_EXECUTABLE: /usr/bin/python3.10
+      PYTHON_EXECUTABLE: /usr/bin/python3
       PYTHON_SCRIPT_PATH: /app/predict.py
-      PYTHON_MONGO_URI: mongodb://mongo:27017/
+      PYTHON_MONGO_URI:  mongodb+srv://Suraj:dwPW6l3H4C2V6ATe@cluster0.fbqnoyu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       PYTHON_MONGO_DB: TeamC9
     volumes:
-      - ../predict.py:/app/predict.py:ro
-      - ../requirements.txt:/app/requirements.txt:ro
-      - ../medical_device_failure_risk_pipeline.pkl:/app/medical_device_failure_risk_pipeline.pkl:ro
-      - ../recall_severity_rf_no_device_dates.joblib:/app/recall_severity_rf_no_device_dates.joblib:ro
+      - ./predict.py:/app/predict.py:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+      - ./medical_device_failure_risk_pipeline.pkl:/app/medical_device_failure_risk_pipeline.pkl:ro
+      - ./recall_severity_rf_no_device_dates.joblib:/app/recall_severity_rf_no_device_dates.joblib:ro
     restart: always
 
 volumes:
   mongo_data:
-
