@@ -1,24 +1,12 @@
 version: '3.8'
 services:
-  mongo:
-    image: mongo:6.0
-    container_name: mongo
-    restart: always
-    ports:
-      - "27018:27017"
-    environment:
-      MONGO_INITDB_DATABASE: TeamC9
-    volumes:
-      - mongo_data:/data/db
-
   app:
     build: .
     container_name: medical-device-app
-    depends_on:
-      - mongo
     ports:
       - "8080:8080"
     environment:
+      SERVER_PORT: 8080
       SPRING_DATA_MONGODB_URI: mongodb+srv://Suraj:dwPW6l3H4C2V6ATe@cluster0.fbqnoyu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       SPRING_DATA_MONGODB_DATABASE: TeamC9
       PYTHON_EXECUTABLE: /usr/bin/python3
@@ -32,5 +20,4 @@ services:
       - ./recall_severity_rf_no_device_dates.joblib:/app/recall_severity_rf_no_device_dates.joblib:ro
     restart: always
 
-volumes:
-  mongo_data:
+
