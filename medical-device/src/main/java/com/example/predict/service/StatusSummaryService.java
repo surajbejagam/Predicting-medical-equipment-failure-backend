@@ -65,7 +65,7 @@ public class StatusSummaryService {
                 .filter(Objects::nonNull)
                 .map(mid -> {
                     Document m = mongo.getCollection(manufacturersCol).find(new Document("id", mid)).first();
-                    return m != null ? m.getString("parent_company") : null;
+                    return m != null ? m.getString("name") : null;
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
